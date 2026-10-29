@@ -1,103 +1,133 @@
 # 53-Team-PF-YCMCHC
-Commonplace is a privacy-first, offline-first RSS/Atom reader with anonymous community discovery, intelligent feed recommendations, interactive 3D design, and a distraction-free reading experience.
-Commonplace — PS-003
+Commonplace — Web Feed Discovery Platform
 
-A Privacy-First, Offline-First RSS/Atom Reader with Anonymous Community Discovery
+Overview
 
-Commonplace is a browser-based reading platform designed to help users discover, subscribe to, and read blogs from different publishers in one place. It prioritizes user privacy, offline accessibility, and a clean, interactive reading experience.
+Commonplace is a web application designed to simplify web feed discovery through a unified interface. It uses a Flask-based backend and API gateway to process requests, validate URLs, and support feed discovery. The project also incorporates service worker caching for application resources and automated integration testing for API reliability and security.
+
+Problem Statement
+
+Problem Statement 3
+
+Commonplace aims to simplify the process of discovering web feeds from websites, providing users with a centralized and accessible way to work with feed-related functionality.
 
 Key Features
 
-- Smart Feed Discovery: Discover RSS and Atom feeds from blog URLs.
-- Local-First Subscriptions: Manage subscriptions locally with graceful handling of feed-fetch failures.
-- Interactive Reading Experience: Browse articles through a modern, responsive interface.
-- Related Blog Recommendations: Discover relevant publications and articles.
-- Author Search: Search for articles and blogs by author name or headline.
-- Reading Tools: Read articles aloud and save personal notes where supported.
-- Anonymous Community Features: Support privacy-conscious comments, voting, and recommendations where implemented.
-- Offline Support: Access locally cached content when network connectivity is unavailable.
-- Content Categories: Organize feeds and articles by topic.
-- Privacy and Security: Apply URL validation, SSRF protection, and content sanitization.
+- Feed Discovery: Supports discovering feed URLs from user-provided website URLs.
+- REST API: Provides backend endpoints for handling feed-related requests.
+- Input Validation: Handles missing parameters and invalid requests with appropriate HTTP status codes.
+- URL Security: Includes protections against requests to private and loopback network destinations to mitigate Server-Side Request Forgery (SSRF).
+- Offline Support: Uses a service worker to cache selected application resources.
+- Automated Testing: Includes integration tests for API responses, parameter validation, and URL security checks.
 
 Technology Stack
 
-The exact stack depends on the current implementation.
+- Backend: Python, Flask
+- API Communication: HTTP and JSON
+- Testing: Python unittest
+- Offline Functionality: JavaScript Service Worker
+- Version Control: Git and GitHub
 
-- Frontend: HTML, CSS, JavaScript, and WebGL/Three.js where implemented.
-- Backend: Python and Flask where implemented.
-- Storage: IndexedDB for browser-side data.
-- Testing: Python unit and integration tests.
-- Feed Formats: RSS and Atom.
+System Architecture
 
-Project Structure
+Commonplace follows a client-server architecture.
 
-commonplace-ps003/
-├── server/
-├── static/
-│   ├── css/
-│   ├── js/
-│   └── index.html
-├── tests/
-├── README.md
-├── requirements.txt
-└── .gitignore
+1. Frontend: Provides the interface for user interaction.
+2. Flask Backend: Processes incoming requests and executes application logic.
+3. Feed Discovery Module: Handles feed URL discovery.
+4. URL Validation and Security: Validates URLs and blocks prohibited destinations.
+5. Service Worker: Caches selected application resources for offline access.
+6. Testing Module: Verifies API behavior and selected security requirements.
 
-The structure above is illustrative. Refer to the actual project files for the complete implementation.
+Architecture Flow
 
-Getting Started
+User
+  |
+  v
+Web Application
+  |
+  v
+Flask Backend / API Gateway
+  |
+  +-------------------+
+  |                   |
+  v                   v
+Feed Discovery    URL Validation
+  |                   |
+  +---------+---------+
+            |
+            v
+      JSON Response
+            |
+            v
+      Web Application
 
-Prerequisites
+API Overview
 
-- Python 3.10 or later, compatible with the project's dependencies.
-- Git.
-- A modern web browser.
+Method| Endpoint| Description
+GET| "/api/autodiscover"| Discovers a feed using a supplied website URL.
 
-Installation
+Request Parameter
 
-Clone the repository:
+- "url": The website URL for which feed discovery is requested.
 
-git clone https://github.com/YOUR-USERNAME/commonplace-ps003.git
+Error Handling
 
-Enter the project directory:
+- 400 Bad Request: Returned when the required URL parameter is missing.
+- 403 Forbidden: Returned when a request targets a prohibited private or loopback destination, as covered by the integration tests.
 
-cd commonplace-ps003
+Security
 
-Install the dependencies if "requirements.txt" is present:
+Security is an important consideration in Commonplace.
 
-python -m pip install -r requirements.txt
+The application includes URL validation and SSRF-related protections intended to prevent unauthorized requests to private network destinations.
 
-Run the Application
+Security considerations include:
 
-If the project uses the Flask server entry point "server/app.py", run:
-
-python server/app.py
-
-Open the local address printed by the server in your browser.
-
-Note: Adjust the commands to match the actual project structure and configuration.
+- Validating user-provided URLs.
+- Blocking prohibited private and loopback destinations.
+- Handling invalid requests safely.
+- Avoiding exposure of sensitive configuration and internal errors.
+- Preventing unintended caching of dynamic API responses.
 
 Testing
 
-Run the automated tests, if the project uses Python's "unittest" framework:
+The project includes integration tests for the Flask web server and API gateway.
 
-python -m unittest discover tests
+The tests cover:
 
-Record the actual test results before claiming that all tests pass.
+- API response validation.
+- Missing URL parameter handling.
+- Blocking requests to private or loopback destinations.
 
-Privacy and Security
+Tests can be executed using Python's unittest framework when the project dependencies and test configuration are installed.
 
-Commonplace is designed with privacy as a core principle.
+Offline Support
 
-- Keep personal reading data in local browser storage wherever possible.
-- Validate URLs and protect server-side fetching against SSRF.
-- Sanitize untrusted content before rendering.
-- Avoid collecting unnecessary personal information.
-- Document the limitations of anonymous voting, recommendations, and moderation.
+Commonplace includes a service worker designed to cache selected application-shell resources. Dynamic API routes, including "/api/fetch" and "/api/discovery", are intended to remain excluded from runtime caching.
 
+Offline functionality depends on the resources cached by the application and does not necessarily provide offline feed discovery.
 
+Future Scope
 
-Developed for the PS-003 problem statement.
+- Improve feed discovery accuracy and reliability.
+- Enhance the user interface and user experience.
+- Expand automated testing and security validation.
+- Improve offline functionality and application performance.
+- Introduce additional feed management capabilities.
+
+Team
+
+Project Name: Commonplace
+Problem Statement: 3
+
+Acknowledgements
+
+We thank the hackathon organizers, mentors, and contributors for their guidance and support during the development of this project.
 
 License
 
-A license has not yet been selected. All rights remain with the respective copyright holders until a license is added.
+The project is developed as part of a hackathon initiative. Licensing and attribution are subject to the project's selected license and applicable third-party requirements.
+
+
+
