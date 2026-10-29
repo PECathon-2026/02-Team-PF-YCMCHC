@@ -94,13 +94,7 @@ Commonplace is designed with privacy as a core principle.
 - Avoid collecting unnecessary personal information.
 - Document the limitations of anonymous voting, recommendations, and moderation.
 
-Project Status
 
-Under active development.
-
-Features and testing status should be updated as implementation and verification progress.
-
-Team
 
 Developed for the PS-003 problem statement.
 
