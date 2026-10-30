@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Commonplace — A Privacy-First, Offline-First Reader with Anonymous Community Discovery">
+  <meta name="theme-color" content="#080A12">
+  <title>Commonplace — Personal Reading & Anonymous Discovery</title>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="/static/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+
+  <!-- Design System & Layout Stylesheets -->
+  <link rel="stylesheet" href="/static/css/theme.css">
+  <link rel="stylesheet" href="/static/css/layout.css">
+</head>
+<body>
+
+  <div id="app-container">
+
+    <!-- ==================== SIDEBAR NAVIGATION ==================== -->
+    <aside id="app-sidebar" aria-label="Sidebar Navigation">
+      <div class="brand-header">
+        <img src="/static/icon.svg" alt="Commonplace Logo" class="brand-logo">
+        <div>
+          <div class="brand-title">COMMONPLACE</div>
+          <div class="brand-subtitle">PRIVACY-FIRST READER</div>
+        </div>
+      </div>
+
+      <div class="nav-section-title">Reading Journal</div>
+      <ul class="nav-links" role="navigation">
+        <li class="nav-item active" data-view="timeline" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+              <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+            <span>All Articles</span>
+          </div>
+          <span class="nav-counter" id="counter-all">0</span>
+        </li>
+
+        <li class="nav-item" data-view="queue" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span>Reading Queue</span>
+          </div>
+          <span class="nav-counter" id="counter-queue">0</span>
+        </li>
+
+        <li class="nav-item" data-view="saved" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Saved Offline</span>
+          </div>
+          <span class="nav-counter" id="counter-saved">0</span>
+        </li>
+
+        <li class="nav-item" data-view="shorts" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="3" ry="3"/>
+              <polygon points="10 8 16 12 10 16 10 8"/>
+            </svg>
+            <span>Reels / Shorts</span>
+          </div>
+          <span class="pill pill-saved-full" style="font-size:9px; padding:1px 6px;">SNAP</span>
+        </li>
+
+        <li class="nav-item" data-view="notes" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            <span>My Notes</span>
+          </div>
+          <span class="nav-counter" id="counter-notes">0</span>
+        </li>
+      </ul>
+
+      <div class="nav-section-title">Community & Diagnostics</div>
+      <ul class="nav-links">
+        <li class="nav-item" data-view="discovery" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+            </svg>
+            <span>Discovery Cosmos</span>
+          </div>
+          <span class="pill pill-saved-full" style="font-size:9px; padding:1px 6px;">3D</span>
+        </li>
+
+        <li class="nav-item" id="btn-open-notebook" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            <span>Refresh Notebook</span>
+          </div>
+        </li>
+
+        <li class="nav-item" data-view="settings" tabindex="0">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Settings & Backup</span>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Sidebar Status Bottom Bar -->
+      <div class="sidebar-bottom">
+        <div class="system-status-pill">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span id="online-status-indicator" class="status-indicator status-online"></span>
+            <span id="online-status-text" style="font-weight:600;">Online</span>
+          </div>
+          <span style="color:var(--text-dim); font-family:var(--font-mono); font-size:10px;">IDB / SW</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN WORKSPACE ==================== -->
+    <main id="main-workspace" role="main">
+
+      <!-- Topbar Header -->
+      <header class="workspace-topbar">
+        <div class="view-heading">
+          <h1 class="view-title" id="workspace-view-title">All Articles</h1>
+        </div>
+
+        <!-- Global Search Bar (Writer, Headline, Publication) -->
+        <div class="search-container">
+          <svg class="search-icon-inside" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="search" id="global-search-input" class="search-input" placeholder="Search headline, writer, blog (/ to focus)..." aria-label="Search articles and writers">
+        </div>
+
+        <div class="topbar-actions">
+          <button id="btn-toggle-shorts" class="btn btn-outline" title="Toggle Shorts / Reels Snap View">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="3" ry="3"/>
+              <polygon points="10 8 16 12 10 16 10 8"/>
+            </svg>
+            <span>Shorts Feed</span>
+          </button>
+
+          <button id="btn-refresh-all" class="btn btn-outline" title="Refresh all subscribed feeds (R)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            <span>Refresh All</span>
+          </button>
+
+          <button id="btn-add-feed" class="btn btn-primary" title="Subscribe to any blog or feed">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            <span>Add Feed</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Workspace Body: Split Timeline + Centralized Reader + Shorts + Notes -->
+      <div class="workspace-body">
+
+        <!-- Stream Timeline View -->
+        <section id="timeline-pane" aria-label="Article Stream">
+          <!-- Recommended Subscriptions Shelf -->
+          <div id="recommended-subscriptions-shelf" class="recommended-shelf" style="display:none;"></div>
+          <!-- Dynamically populated with 3D tactile feed cards -->
+        </section>
+
+        <!-- Shorts / Reels Snapping Feed View -->
+        <section id="shorts-workspace" aria-label="Shorts and Reels Feed">
+          <!-- Dynamically populated with full-height reel cards -->
+        </section>
+
+        <!-- Dedicated Notes Journal Workspace -->
+        <section id="notes-journal-workspace" aria-label="Reading Notes Journal">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div>
+              <h2 style="font-size:22px; font-weight:800; color:#FFFFFF;">Reading Notes Journal</h2>
+              <p style="font-size:13px; color:var(--text-secondary);">Your highlights, annotations, and personal reflections across all blogs.</p>
+            </div>
+            <button id="btn-export-notes" class="btn btn-lime">Export Notes (Markdown)</button>
+          </div>
+          <div class="notes-grid" id="notes-journal-grid"></div>
+        </section>
+
+        <!-- Centralized Isolated Article Reader Sink -->
+        <section id="reader-pane" class="hidden" aria-label="Article Reader">
+          <!-- Dynamically populated by ArticleViewer component -->
+        </section>
+
+        <!-- ==================== DISCOVERY WORKSPACE ==================== -->
+        <section id="discovery-workspace" style="display:none;" aria-label="Community Discovery">
+
+          <div class="discovery-hero-card">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span class="pill pill-saved-full">Anonymous Discovery</span>
+                <span class="pill pill-summary-only">Zero Fingerprints</span>
+              </div>
+              <h2 style="font-size:20px; font-weight:800; color:#FFFFFF; margin-bottom:6px;">
+                The Constellation of Reading
+              </h2>
+              <p style="font-size:13px; color:var(--text-secondary); max-width:60ch; line-height:1.5;">
+                Discover publications through transparent co-subscription overlap. No user tracking, no accounts, and no persistent device fingerprints. Popularity is measured strictly in accepted anonymous submission batches.
+              </p>
+            </div>
+
+            <button id="btn-share-batch" class="btn btn-lime" style="padding:10px 18px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+              <span>Share Subscription Batch</span>
+            </button>
+          </div>
+
+          <!-- 3D Interactive Cosmos Container -->
+          <div id="cosmos-3d-container">
+            <canvas id="cosmos-canvas"></canvas>
+            <div class="cosmos-overlay-controls">
+              <span class="pill pill-offline-unavailable" style="background:rgba(8,10,18,0.8);">
+                Drag to Orbit • Scroll to Zoom • Click Node to Inspect
+              </span>
+            </div>
+          </div>
+
+          <!-- Discovery Filter Modes -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+            <div style="display:flex; gap:8px;">
+              <button id="tab-rec-related" class="btn btn-primary" style="padding:6px 14px;">
+                Related to My Subscriptions
+              </button>
+              <button id="tab-rec-popular" class="btn btn-outline" style="padding:6px 14px;">
+                Popular Discovery
+              </button>
+            </div>
+            <span style="font-size:12px; color:var(--text-dim); font-family:var(--font-mono);">
+              Minimum-support threshold: K ≥ 2
+            </span>
+          </div>
+
+          <!-- Discovery Grid -->
+          <div class="discovery-grid" id="discovery-grid"></div>
+        </section>
+
+        <!-- ==================== SETTINGS & BACKUP WORKSPACE ==================== -->
+        <section id="settings-workspace" style="display:none; flex:1; overflow-y:auto; padding:28px;" aria-label="Settings and Backup">
+          <div style="max-width:680px; display:flex; flex-direction:column; gap:24px;">
+
+            <div style="background:var(--midnight-card); border:1px solid var(--midnight-border); border-radius:12px; padding:24px;">
+              <h3 style="font-size:17px; font-weight:700; color:#FFFFFF; margin-bottom:12px;">Local Data Backup & Restore</h3>
+              <p style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-bottom:16px;">
+                Export your subscriptions, read/unread states, and reading positions to an open JSON format. 
+                <span style="color:var(--acid-lime);">Notice:</span> Exported files reveal your reading interests in cleartext. Keep them stored safely.
+              </p>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <button id="btn-export-backup" class="btn btn-lime">
+                  Export Local Backup (JSON)
+                </button>
+                <label class="btn btn-outline" style="cursor:pointer;">
+                  Restore from JSON
+                  <input type="file" id="input-import-backup" accept=".json" style="display:none;">
+                </label>
+              </div>
+            </div>
+
+            <div style="background:var(--midnight-card); border:1px solid var(--midnight-border); border-radius:12px; padding:24px;">
+              <h3 style="font-size:17px; font-weight:700; color:#FFFFFF; margin-bottom:12px;">Anonymous Batch Sharing Safeguards</h3>
+              <p style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-bottom:12px;">
+                Commonplace never automatically transmits your subscription list in the background. Sharing is strictly manual and off by default.
+              </p>
+              <div style="font-size:13px; color:var(--text-muted);">
+                Last shared batch: <span id="settings-last-shared-time" style="font-family:var(--font-mono); color:var(--text-primary);">Never</span>
+              </div>
+            </div>
+
+            <div style="background:var(--midnight-card); border:1px solid var(--midnight-border); border-radius:12px; padding:24px;">
+              <h3 style="font-size:17px; font-weight:700; color:#FFFFFF; margin-bottom:12px;">Organizer Seed Dataset Status</h3>
+              <div id="settings-seed-status" style="font-size:13px; line-height:1.6;">
+                Checking seed status...
+              </div>
+            </div>
+
+            <div style="background:var(--midnight-card); border:1px solid var(--midnight-border); border-radius:12px; padding:24px;">
+              <h3 style="font-size:17px; font-weight:700; color:#FFFFFF; margin-bottom:12px;">Keyboard Navigation Shortcuts</h3>
+              <div style="display:grid; grid-template-columns:auto 1fr; gap:8px 16px; font-size:13px;">
+                <kbd style="background:var(--midnight-black); border:1px solid var(--midnight-border); padding:2px 8px; border-radius:4px; font-family:var(--font-mono); color:var(--acid-lime);">j / k</kbd>
+                <span style="color:var(--text-secondary);">Navigate to next / previous article</span>
+
+                <kbd style="background:var(--midnight-black); border:1px solid var(--midnight-border); padding:2px 8px; border-radius:4px; font-family:var(--font-mono); color:var(--acid-lime);">s</kbd>
+                <span style="color:var(--text-secondary);">Save / Unsave article for offline access</span>
+
+                <kbd style="background:var(--midnight-black); border:1px solid var(--midnight-border); padding:2px 8px; border-radius:4px; font-family:var(--font-mono); color:var(--acid-lime);">m</kbd>
+                <span style="color:var(--text-secondary);">Toggle read / unread status</span>
+
+                <kbd style="background:var(--midnight-black); border:1px solid var(--midnight-border); padding:2px 8px; border-radius:4px; font-family:var(--font-mono); color:var(--acid-lime);">r</kbd>
+                <span style="color:var(--text-secondary);">Refresh all subscribed feeds</span>
+
+                <kbd style="background:var(--midnight-black); border:1px solid var(--midnight-border); padding:2px 8px; border-radius:4px; font-family:var(--font-mono); color:var(--acid-lime);">d</kbd>
+                <span style="color:var(--text-secondary);">Open 3D Discovery Cosmos</span>
+
+                <kbd style="background:var(--midnight-black); border:1px solid var(--midnight-border); padding:2px 8px; border-radius:4px; font-family:var(--font-mono); color:var(--acid-lime);">Esc</kbd>
+                <span style="color:var(--text-secondary);">Close article reader or dialogs</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ==================== REFRESH NOTEBOOK DRAWER ==================== -->
+    <aside id="refresh-notebook-drawer" aria-label="Refresh Diagnostics Notebook">
+      <div class="notebook-header">
+        <div>
+          <h2 style="font-size:16px; font-weight:800; color:#FFFFFF;">Refresh Notebook</h2>
+          <span style="font-size:11px; color:var(--acid-lime); font-family:var(--font-mono);">Feed Health & Diagnostics</span>
+        </div>
+        <button id="notebook-close-btn" class="btn btn-outline" style="padding:4px 8px;" title="Close Drawer (Esc)">✕</button>
+      </div>
+
+      <div class="notebook-body" id="notebook-content-body">
+        <!-- Dynamically populated with feed diagnostic cards -->
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Main ES Module Entry Point -->
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

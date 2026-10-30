@@ -1,0 +1,17 @@
+{
+  "name": "Commonplace",
+  "short_name": "Commonplace",
+  "description": "A Privacy-First, Offline-First Reader with Anonymous Community Discovery",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080A12",
+  "theme_color": "#080A12",
+  "icons": [
+    {
+      "src": "/static/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+/**
+ * Commonplace Design Tokens & Visual System
+ * Palette Architecture:
+ * - Midnight Black:      #05070D (Obsidian space void with twilight undertones)
+ * - Electric Cobalt Blue: #295CFF (High-energy electric cobalt)
+ * - Acid Lime:           #D4FF26 (High-luminance hyper-contrast cyber lime)
+ */
+
+:root {
+  /* Midnight Black Depth Hierarchy */
+  --midnight-black: #05070D;
+  --midnight-surface: #090C15;
+  --midnight-card: #0F1424;
+  --midnight-card-hover: #141A2F;
+  --midnight-elevated: #182038;
+  --midnight-border: #1C2746;
+  --midnight-border-subtle: #121A30;
+  --midnight-border-active: #2C3C6B;
+
+  /* Electric Cobalt Blue System */
+  --electric-cobalt: #295CFF;
+  --electric-cobalt-light: #5E87FF;
+  --electric-cobalt-dim: #1638BF;
+  --electric-cobalt-glow: rgba(41, 92, 255, 0.40);
+  --electric-cobalt-translucent: rgba(41, 92, 255, 0.12);
+  --electric-cobalt-gradient: linear-gradient(135deg, #295CFF 0%, #1538BF 100%);
+
+  /* Acid Lime System */
+  --acid-lime: #D4FF26;
+  --acid-lime-light: #E4FF66;
+  --acid-lime-dim: #A8D90B;
+  --acid-lime-dark: #6D8E07;
+  --acid-lime-glow: rgba(212, 255, 38, 0.45);
+  --acid-lime-translucent: rgba(212, 255, 38, 0.12);
+  --acid-lime-gradient: linear-gradient(135deg, #D4FF26 0%, #B8E817 100%);
+
+  /* Functional Status & Neutrals */
+  --color-error: #FF3B56;
+  --color-error-translucent: rgba(255, 59, 86, 0.15);
+  --color-warning: #FFB300;
+
+  /* Text & Readability Contrast */
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-dim: #475569;
+
+  /* Typography Fallbacks */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-serif: "Newsreader", "Charter", "Georgia", "Times New Roman", serif;
+
+  /* Elevations & Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.75);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.9);
+  --shadow-cobalt: 0 0 25px var(--electric-cobalt-glow);
+  --shadow-lime: 0 0 20px var(--acid-lime-glow);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Base Document Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--midnight-black);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Accessible Focus States */
+:focus-visible {
+  outline: 2px solid var(--acid-lime);
+  outline-offset: 3px;
+  box-shadow: 0 0 12px var(--acid-lime-glow);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card-3d, .tilt-panel {
+    transform: none !important;
+  }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--midnight-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--midnight-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--electric-cobalt-dim);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  user-select: none;
+  letter-spacing: -0.2px;
+}
+
+.btn-primary {
+  background: var(--electric-cobalt-gradient);
+  color: #FFFFFF;
+  border-color: rgba(94, 135, 255, 0.4);
+  box-shadow: 0 2px 14px var(--electric-cobalt-translucent);
+}
+.btn-primary:hover {
+  border-color: var(--electric-cobalt-light);
+  box-shadow: var(--shadow-cobalt);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-lime {
+  background: var(--acid-lime-gradient);
+  color: var(--midnight-black);
+  border-color: var(--acid-lime);
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(212, 255, 38, 0.25);
+}
+.btn-lime:hover {
+  background: var(--acid-lime-light);
+  box-shadow: var(--shadow-lime);
+  transform: translateY(-1px);
+}
+.btn-lime:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  background: rgba(15, 20, 36, 0.6);
+  color: var(--text-primary);
+  border-color: var(--midnight-border);
+  backdrop-filter: blur(8px);
+}
+.btn-outline:hover {
+  border-color: var(--electric-cobalt);
+  color: #FFFFFF;
+  background: var(--electric-cobalt-translucent);
+  box-shadow: 0 0 15px rgba(41, 92, 255, 0.2);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--color-error);
+  border-color: rgba(255, 59, 86, 0.3);
+}
+.btn-danger:hover {
+  background: var(--color-error-translucent);
+  border-color: var(--color-error);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Badges & Pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pill-saved-full {
+  background: var(--acid-lime-translucent);
+  color: var(--acid-lime);
+  border: 1px solid rgba(212, 255, 38, 0.4);
+  box-shadow: 0 0 10px rgba(212, 255, 38, 0.15);
+}
+
+.pill-summary-only {
+  background: var(--electric-cobalt-translucent);
+  color: var(--electric-cobalt-light);
+  border: 1px solid rgba(41, 92, 255, 0.4);
+}
+
+.pill-offline-unavailable {
+  background: rgba(15, 20, 36, 0.7);
+  color: var(--text-muted);
+  border: 1px solid var(--midnight-border);
+}
+
+.pill-synthetic {
+  background: rgba(255, 179, 0, 0.12);
+  color: var(--color-warning);
+  border: 1px solid rgba(255, 179, 0, 0.4);
+}
+
+.pill-online {
+  background: var(--acid-lime-translucent);
+  color: var(--acid-lime);
+  border: 1px solid rgba(212, 255, 38, 0.4);
+}
+
+.pill-offline {
+  background: var(--color-error-translucent);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
