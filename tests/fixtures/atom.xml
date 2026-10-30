@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Dan Luu's Blog</title>
+  <link href="https://danluu.com/atom.xml" rel="self"/>
+  <link href="https://danluu.com/"/>
+  <updated>2026-10-05T18:30:02Z</updated>
+  <id>tag:danluu.com,2026:feed</id>
+  <entry>
+    <title>Post-mortems and cultural resilience</title>
+    <link href="https://danluu.com/post-mortems/"/>
+    <id>tag:danluu.com,2026:post-mortems</id>
+    <updated>2026-10-05T18:30:02Z</updated>
+    <summary>Notes on why organizations repeat operational mistakes despite comprehensive post-mortems.</summary>
+    <content type="html"><![CDATA[<p>Why do systems experience repeat incidents even after thorough debriefs? Examining incentives.</p>]]></content>
+  </entry>
+</feed>

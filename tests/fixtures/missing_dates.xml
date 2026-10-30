@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Feed With No Dates</title>
+    <link>https://nodates.example.com/</link>
+    <item>
+      <title>Article with missing pubDate</title>
+      <link>https://nodates.example.com/item1</link>
+      <guid>nodates-guid-1</guid>
+      <description>No dates here.</description>
+    </item>
+  </channel>
+</rss>
